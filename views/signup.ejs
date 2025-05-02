@@ -1,0 +1,155 @@
+
+<!-- All of the code for the Sign Up page-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        /* All styles used for the signup Page */
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        /* Container for the signup form - centered with a border */
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Form field spacing and structure */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        /* Consistent styling for all text-based input fields */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        /* Submit button styling with hover effect */
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%; /* Make button full width */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Error message styling */
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            padding: 8px;
+            background-color: #ffeeee;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* Try again link container */
+        .try-again {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .try-again a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .try-again a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Back to home link */
+        .home-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .home-link a {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .home-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Create User</h1>
+        
+        <!-- Conditional rendering based on the error state-->
+        <% if (errorMessage) { %>
+            <p class="error-message"><%= errorMessage %></p>
+            <div class="try-again">
+                <a href="/signup">Try again</a>
+            </div>
+        <% } else { %>
+            <!-- User signup form with required fields -->
+            <form action="/signup" method="POST">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
+            
+            <!-- Link to login page for existing users -->
+            <div class="try-again">
+                Already have an account? <a href="/login">Log in</a>
+            </div>
+        <% } %>
+        
+        <!-- Back to home page link -->
+        <div class="home-link">
+            <a href="/">← Back to Home</a>
+        </div>
+    </div>
+</body>
+
+</html>

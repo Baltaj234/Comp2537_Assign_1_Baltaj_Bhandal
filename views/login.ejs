@@ -1,0 +1,119 @@
+
+<!-- All the code for the Login Page-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <style>
+
+            /* All styles used for the Login Page */
+
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .try-again {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .try-again a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .try-again a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Log In</h1>
+
+        <!-- If the login fails an error message if displayed -->
+
+        <% if (errorMessage) { %>
+            <p class="error-message"><%= errorMessage %></p>
+            <div class="try-again">
+                <a href="/login">Try again</a>
+            </div>
+
+            <% } else { %>
+                <!-- Login form is displayed to the user with email, password fields and submit button-->
+                <form action="/login" method="POST">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+
+                   <button type="submit">Submit</button>
+                </form>
+                <% } %>
+    </div>
+</body>
+
+</html>

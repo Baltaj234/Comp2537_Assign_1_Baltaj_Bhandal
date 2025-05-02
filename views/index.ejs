@@ -1,0 +1,65 @@
+
+<!-- All of the code used for the home page of the website-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        /* All styles used for the Home Page */
+        body {
+            font-family: sans-serif; 
+            margin: 20px;       
+        }
+
+        .container {
+            max-width: 600px;  
+            margin: 0 auto;   
+        }
+
+        h1 {
+            text-align: center; 
+        }
+
+        .auth-links, .user-info {
+            margin-top: 20px;  
+            text-align: center; 
+        }
+
+        .auth-links a, .user-info a {
+            margin: 0 10px;    
+            text-decoration: none;
+            padding: 8px 15px;  
+            border: 1px solid #ccc; 
+            border-radius: 5px;  
+            background-color: #f9f9f9; 
+        }
+        .user-info span {
+            font-weight: bold; /* Making the username bold */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Home Page</h1>
+        <!-- If the user is not logged links to the signup page and login page appear-->
+         <!-- Gives the user a choice to log in to their previously created account or create a new one if needed-->
+        <% if (!loggedIn) { %>
+            <div class="auth-links">
+                <a href="/signup">Sign up</a>
+                <a href="/login">Log in</a>
+            </div>
+        <% } else { %>
+            <!-- If the user is already logged in display links to the members area and allow the user to logout if needed-->
+            <div class="user-info">
+                <p>Hello, <span id="userName"><%= name %></span>!</p>
+                <a href="/members">Go to Members Area</a>
+                <a href="/logout">Logout</a>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>
+
