@@ -1,48 +1,39 @@
-
-<!-- All the code for the Members Page-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Members Area</title>
+    <!-- Linking Bootstrap to the file-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
-        /* All styles used for the members page */
+        /* All custom styles needed beyond Bootstrap */
         body {
             font-family: sans-serif;
             margin: 20px;
         }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        h1 {
-            text-align: center;
-        }
-        .random-image {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .logout {
-            text-align: center;
-        }
+       
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Hello message to the whoever logged in -->
-         <!-- Displays Hello followed by the user's name (which they made in the sign up process) -->
-
-        <h1>Hello, <%= user.name %>!</h1>
-        <div class="random-image">
-
-            <!-- Displaying the randomly selected image in the screen -->
-            <img src="/images/<%= randomImage %>" alt="Random Image">
+        <h1 class="text-center mb-4">Hello, <%= user.name %>!</h1>
+        <div class="image-grid row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <!-- rendering all of the images -->
+            <% images.forEach(image => { %>
+                <div class="col">
+                    <div class="card">
+                        <img src="/images/<%= image %>" class="card-img-top img-fluid" alt="Welcome Image">
+                        <div class="card-body">
+                            <!-- Text the shows filename of image-->
+                            <p class="card-text text-center"><%= image %></p>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
         </div>
-        <div class="logout">
-            <!-- Allowing the user to log out-->
-            <a href="/logout">Logout</a>
+        <div class="logout text-center mt-4">
+            <a href="/logout" class="btn btn-danger">Logout</a>
         </div>
     </div>
 </body>

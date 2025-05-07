@@ -233,20 +233,20 @@ app.use(session({
     next();
   };
 
-  app.get('/members', requireLogin, (req, res) => {
-    try {
-      const randomIndex = Math.floor(Math.random() * images.length);
-      const randomImage = images[randomIndex];
-      
+      app.get('/members', requireLogin, (req, res) => {
+         try {
+    
       res.render('members', {
-        user: req.session.user,
-        randomImage: randomImage,
+     user: req.session.user,
+
+     // Rendering all three images 
+      images: images,  });
+    
+         } catch (error) {
+          console.error('Error rendering members page:', error);
+           res.status(500).send('Error loading members page');
+         }
       });
-    } catch (error) {
-      console.error('Error rendering members page:', error);
-      res.status(500).send('Error loading members page');
-    }
-  });
 
 
   // The 404 Error page
