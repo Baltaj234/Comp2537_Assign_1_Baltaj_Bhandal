@@ -109,33 +109,31 @@ app.use(session({
     }
   });
 
-  // The Sign Up Page
-
   app.get('/signup', (req, res) => {
-    res.render('signup', { errorMessage: undefined });  // Render the signup form 
+    res.render('signup', { errorMessage: undefined });  // Render the signup form
   });
   
   app.post('/signup', async (req, res) => {
-    // Validate user input 
+    // Validate user input
     const schema = Joi.object({
       name: Joi.string().required(),
       email: Joi.string().email().required(),
       password: Joi.string().required(),
+      user_type: Joi.string().valid('user', 'admin').required() // Validate user_type
     });
   
     try {
       await schema.validateAsync(req.body);
-    } catch (errorMessage) {
+    } catch (error) {
       return res.status(400).send(error.details[0].message +
-         '<br><a href="/signup">Try again</a>'
-
-      ); 
+        '<br><a href="/signup">Try again</a>'
+      );
     }
   
-    const { name, email, password } = req.body;
+    const { name, email, password, user_type } = req.body;
   
     try {
-      // Hash the password 
+      // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
   
       // Insert the user into the database
@@ -143,12 +141,13 @@ app.use(session({
         name,
         email,
         password: hashedPassword,
+        user_type: user_type,
       });
   
-      // Create a session 
-      req.session.user = { name, email };
+      // Create a session
+      req.session.user = { name, email, user_type };
   
-      res.redirect('/members'); // Redirect to members area 
+      res.redirect('/members'); // Redirect to members area
     } catch (error) {
       console.error('Error during signup:', error);
       res.status(500).send('Error signing up. Please try again.');
@@ -156,14 +155,12 @@ app.use(session({
   });
 
 
-  // The Login page
-
   app.get('/login', (req, res) => {
-    res.render('login', { errorMessage: undefined }); // Render the login form 
+    res.render('login', { errorMessage: undefined }); // Render the login form
   });
   
   app.post('/login', async (req, res) => {
-    // Validate user input 
+    // Validate user input
     const schema = Joi.object({
       email: Joi.string().email().required(),
       password: Joi.string().required(),
@@ -178,17 +175,22 @@ app.use(session({
     const { email, password } = req.body;
   
     try {
-      // Check if the user exists 
+      // Check if the user exists
       const user = await usersCollection.findOne({ email });
   
       if (user && await bcrypt.compare(password, user.password)) {
-        // If passwords match, create a session 
-        // User is then redirected to the Members Page
-        req.session.user = { name: user.name, email: user.email };
-        return res.redirect('/members'); 
+        // If passwords match, create a session
+        // Include the user_type in the session
+        req.session.user = { name: user.name, email: user.email, user_type: user.user_type };
+  
+        // Redirect based on user type
+        if (user.user_type === 'admin') {
+          return res.redirect('/admin');
+        } else {
+          return res.redirect('/members');
+        }
       } else {
-
-        // Invalid credentials 
+        // Invalid credentials
         return res.status(401).send('Invalid email/password combination.<br><a href="/login">Try again</a>');
       }
     } catch (error) {

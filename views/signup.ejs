@@ -2,77 +2,91 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <!-- Linking Bootstrap to the file -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <style>
-        /* All custom styles needed beyond Bootstrap */
-        body {
-            font-family: sans-serif;
-            margin: 20px;
-        }
-        .error-message {
-            color: red; 
-            background-color: #ffeeee; 
-            border-radius: 0.25rem; 
-            text-align: center; 
-            padding: 0.5rem; 
-            margin-top: 1rem; 
-        }
-        .try-again, .home-link {
-            text-align: center;
-            margin-top: 1rem; 
-        }
-        .home-link a {
-            color: #6c757d; 
-            text-decoration: none; 
-            font-size: 0.875rem; 
-        }
-        .home-link a:hover {
-            text-decoration: underline; 
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <!-- Linking Bootstrap to the file -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <style>
+    /* All custom styles needed beyond Bootstrap */
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+    }
+
+    .error-message {
+      color: red;
+      background-color: #ffeeee;
+      border-radius: 0.25rem;
+      text-align: center;
+      padding: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .try-again,
+    .home-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .home-link a {
+      color: #6c757d;
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+
+    .home-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1 class="text-center mb-4">Create User</h1>
+  <div class="container">
+    <h1 class="text-center mb-4">Create User</h1>
 
-        <!-- Error message to user -->
-        <% if (errorMessage) { %>
-            <p class="error-message"><%= errorMessage %></p>
-            <div class="try-again">
-                <a href="/signup" class="link-primary">Try again</a>
-            </div>
-        <% } else { %>
-            <!-- Sign up form is displayed to user -->
-            <form action="/signup" method="POST">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
-            </form>
-
-            <div class="try-again mt-3">
-                Already have an account? <a href="/login" class="link-primary">Log in</a>
-            </div>
-        <% } %>
-
-        <div class="home-link mt-3">
-            <a href="/" class="link-secondary">← Back to Home</a>
+    <!-- Handling errors-->
+    <% if (errorMessage) { %>
+      <p class="error-message"><%= errorMessage %></p>
+      <div class="try-again">
+        <a href="/signup" class="link-primary">Try again</a>
+      </div>
+      <!-- User sees sign up form -->
+    <% } else { %>
+      <form action="/signup" method="POST">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input type="text" class="form-control" id="name" name="name" required>
         </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="mb-3">
+            <!-- User selects their type (admin or normal user )-->
+          <label for="user_type" class="form-label">User Type:</label>
+          <select class="form-select" id="user_type" name="user_type">
+            <option value="user" selected>Normal User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+      </form>
+
+      <div class="try-again mt-3">
+        Already have an account? <a href="/login" class="link-primary">Log in</a>
+      </div>
+    <% } %>
+
+    <div class="home-link mt-3">
+      <a href="/" class="link-secondary">← Back to Home</a>
     </div>
+  </div>
 </body>
 
 </html>
