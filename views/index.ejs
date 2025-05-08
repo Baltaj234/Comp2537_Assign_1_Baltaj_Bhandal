@@ -16,7 +16,7 @@
             text-decoration: none;
         }
         .user-info span {
-            font-weight: bold; /* Making the username bold */
+            font-weight: bold; 
         }
     </style>
 </head>
@@ -24,7 +24,7 @@
     <div class="container">
         <h1 class="text-center">Welcome to the Home Page</h1>
         <% if (!loggedIn) { %>
-            <!-- If user is not logged in two links display to otehr pages-->
+            <!-- If user is not logged in two links display to other pages-->
             <div class="d-flex justify-content-center mt-4">
                 <a href="/signup" class="btn btn-primary me-2">Sign up</a>
                 <a href="/login" class="btn btn-outline-primary">Log in</a>
@@ -34,6 +34,7 @@
             <div class="text-center mt-4">
                 <p>Hello, <span id="userName"><%= name %></span>!</p>
                 <a href="/members" class="btn btn-success me-2">Go to Members Area</a>
+                <a href="/admin" class="btn btn-info">Go to Admin Page</a>
                 <a href="/logout" class="btn btn-danger">Logout</a>
             </div>
         <% } %>
