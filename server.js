@@ -248,6 +248,53 @@ app.use(session({
          }
       });
 
+      // Middleware function to check if a user is an admin
+      const requireAdmin = (req, res, next) => {
+        if (!req.session.user || req.session.user.user_type !== 'admin') {
+            //   If the user is not an admin, tell them they are not authorized
+            return res.status(403).send('You are not authorized to view this page.'); 
+           
+        }
+        next(); 
+    };
+
+
+    // The route to display the admin page
+    app.get('/admin', requireAdmin, async (req, res) => {
+      try {
+          const users = await usersCollection.find().toArray();
+          res.render('admin', { users: users });
+      } catch (error) {
+          console.error('Error fetching users for admin page:', error);
+          res.status(500).send('Error loading admin page.');
+      }
+  });
+
+
+  // route to handle promoting a user to an admin
+  app.post('/promote/:email', requireAdmin, async (req, res) => {
+    try {
+        const { email } = req.params;
+        await usersCollection.updateOne({ email: email }, { $set: { user_type: 'admin' } });
+        res.redirect('/admin');
+    } catch (error) {
+        console.error('Error promoting user:', error);
+        res.status(500).send('Error promoting user.');
+    }
+});
+
+// Route to handle demoting a admin to a normal user
+app.post('/demote/:email', requireAdmin, async (req, res) => {
+    try {
+        const { email } = req.params;
+        await usersCollection.updateOne({ email: email }, { $set: { user_type: 'user' } });
+        res.redirect('/admin');
+    } catch (error) {
+        console.error('Error demoting user:', error);
+        res.status(500).send('Error demoting user.');
+    }
+});
+
 
   // The 404 Error page
 
