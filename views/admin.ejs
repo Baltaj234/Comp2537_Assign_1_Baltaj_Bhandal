@@ -21,13 +21,14 @@
                     <td><%= user.user_type %></td>
                     <td>
                         <% if (user.user_type === 'admin') { %>
+                            <!-- The demote and promote buttons do not work currently-->
                             <!-- If user is an admin you can demote them to a normal user-->
-                            <form action="/demote/<%= user.name %>" method="post" class="d-inline">
+                            <form action="/demote/<%= user.email %>" method="post" class="d-inline">
                                 <button type="submit" class="btn btn-warning btn-sm">Demote</button>
                             </form>
                         <% } else { %>
                             <!-- If user is normal user you can promote them to an admin -->
-                            <form action="/promote/<%= user.name %>" method="post" class="d-inline">
+                            <form action="/promote/<%= user.email %>" method="post" class="d-inline">
                                 <button type="submit" class="btn btn-success btn-sm">Promote</button>
                             </form>
                         <% } %>
@@ -41,4 +42,6 @@
         <button type="submit" class="btn btn-danger">Logout</button>
     </form>
 </div>
+<!-- Including the footer-->
+<%- include('footer') %>
 
