@@ -254,7 +254,7 @@ app.use(session({
       const requireAdmin = (req, res, next) => {
         if (!req.session.user || req.session.user.user_type !== 'admin') {
             //   If the user is not an admin, tell them they are not authorized
-            return res.status(403).send('You are not authorized to view this page.'); 
+            return res.redirect('/members');
            
         }
         next(); 
